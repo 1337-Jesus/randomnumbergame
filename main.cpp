@@ -2,6 +2,7 @@
 
 //cloned from github repo and commited
 
+
 void sayHello() {
 	std::cout << "Hello and welcome to the random number guessing game\n";
 }
