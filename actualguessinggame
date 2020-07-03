@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <random>
+#include <ctime>
 using std::cout;
 using std::cin;
 
@@ -11,8 +12,10 @@ void congratulation() {
 	cout << "Congratulations, you have guessed the secret number!\n";
 }
 
-unsigned int setRandomNumber() {
-	unsigned int randomNumber = 1234;
+unsigned int setRandomNumber(std::mt19937 seed) {
+	std::uniform_int_distribution<> randNum{ 1,999 };
+	unsigned int randomNumber{  };
+	randomNumber = randNum(seed);
 	return randomNumber;
 }
 
@@ -52,8 +55,10 @@ enum GAMESMENU {
 
 void numberGuessingGame() {
 	char playAgainChar{ 'y' };
+
 	do {
-		unsigned int numberToGuess{ setRandomNumber() };
+		std::mt19937 mtseed{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
+		unsigned int numberToGuess{ setRandomNumber(mtseed) };
 		unsigned int tries{ setTryCount() };
 
 		//player starts guessing
@@ -77,8 +82,9 @@ void numberGuessingGame() {
 					else
 						cout << "The secret number is lower than the value you have entered.\n";
 				}
-				else {
-					cout << "You have no tries left. Game Over!\n";
+				else {					
+					cout << "You have no tries left." << "The number was: " << numberToGuess << "\n";
+					cout << "Game Over!\n";
 				}
 			}
 		}
