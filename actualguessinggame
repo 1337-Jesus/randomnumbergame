@@ -1,14 +1,14 @@
 #include <iostream>
 
-//cloned from github repo and commited
 using std::cout;
+using std::cin;
 
 void sayHello() {
-	std::cout << "Hello and welcome to the game collection!\n";
+	cout << "Hello and welcome to the game collection!\n";
 }
 
 void congratulation() {
-	std::cout << "Congratulations, you have guessed the secret number!\n";
+	cout << "Congratulations, you have guessed the secret number!\n";
 }
 
 unsigned int setRandomNumber() {
@@ -23,22 +23,22 @@ unsigned int setTryCount() {
 
 unsigned int userGuess() {
 	unsigned int userGuess{};
-	std::cout << "Enter a non negativ number and press return: \n";
-	std::cin >> userGuess;
-	if (std::cin.fail()) {
-		std::cin.clear();
-		std::cin.ignore(32767, '\n');
+	cout << "Enter a non negativ number and press return: \n";
+	cin >> userGuess;
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(32767, '\n');
 	};
 	return userGuess;
 }
 char playAgain() {
 	std::cout << "Do you want to play again? press \'y\' for yes or any key for no.\n ";
-	char againSwitch{'y'};
-	std::cin >> againSwitch;
-	if (std::cin.fail()) {
-		std::cin.clear();
-		std::cin.ignore(32767, '\n');
-		std::cout << "That was a not a single key.";
+	char againSwitch{ 'y' };
+	cin >> againSwitch;
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(32767, '\n');
+		cout << "That was a not a single key.";
 	}
 	return againSwitch;
 }
@@ -73,12 +73,12 @@ void numberGuessingGame() {
 				{
 					std::cout << "Try it again, you have " << tries << " tries left.\n";
 					if (guess < numberToGuess)
-						std::cout << "The secret number is higher than the value you have entered.\n";
+						cout << "The secret number is higher than the value you have entered.\n";
 					else
-						std::cout << "The secret number is lower than the value you have entered.\n";
+						cout << "The secret number is lower than the value you have entered.\n";
 				}
 				else {
-					std::cout << "You have no tries left. Game Over!\n";
+					cout << "You have no tries left. Game Over!\n";
 				}
 			}
 		}
@@ -89,23 +89,43 @@ void numberGuessingGame() {
 
 int main(void) {
 	//Welcome player and init game state
-	std::cout << "Hello and welcome to the boring game collection! The most boring games ever.....\n";
-	cout << "Choose a game by pressing a number:\n";
-	cout << "1		Number guessing Game\n";
-	cout << "2		Word guessing Game\n";
-	cout << "3		Exit Menu\n";
-	int choise{};
-	std::cin >> choise;
-	GAMESMENU choosengame{static_cast<GAMESMENU>(choise)};
+	cout << "Hello and welcome to the boring game collection! The most boring games ever.....\n";
+	cout << "\n";
 
-	switch (choosengame) {
-	case 1:
-		numberGuessingGame();
-	case 2:
-		cout << "The Word guessing Game is still work in progress.";
-	};
+	int choice{};
+	GAMESMENU choosengame{ static_cast<GAMESMENU>(choice) };
 
+	do {
+		cout << "Choose a game by pressing a number:\n";
+		cout << "1		Number guessing Game\n";
+		cout << "2		Word guessing Game\n";
+		cout << "3		Exit Menu\n";
+		cin >> choice;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+		};
+		GAMESMENU choosengame{ static_cast<GAMESMENU>(choice) };
 
-	std::cout << "Thanks for playing the boring game collection. See ya soon.....\n";
+		switch (choosengame) {
+		case 1:
+			numberGuessingGame();
+			break;
+		case 2:
+			cout << "The Word guessing Game is still work in progress.\n";
+			cout << "\n";
+			break;
+		case 3:
+			cout << "cya soon\n";
+			cout << "\n";
+			break;
+		default:
+			cout << "This was not a valid choice!\n";
+			cout << "\n";
+			break;
+		};
+	} while (choice != 3);
+
+	cout << "Thanks for playing the boring game collection. See ya soon.....\n";
 	return 0;
 }
